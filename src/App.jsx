@@ -1,10 +1,26 @@
+/* ========================= */
+/* IMPORTS */
+/* ========================= */
+
 import "./App.css";
+
 import { useState, useEffect } from "react";
+
 import { motion, AnimatePresence } from "framer-motion";
+
+import html2pdf from "html2pdf.js";
+
+/* ========================= */
+/* APP */
+/* ========================= */
 
 function App() {
 
 const [currentSlide,setCurrentSlide] = useState(0);
+
+/* ========================= */
+/* SLIDES */
+/* ========================= */
 
 const slides = [
 
@@ -21,7 +37,9 @@ const slides = [
 
 ];
 
-/* CONTROLES TECLADO */
+/* ========================= */
+/* CONTROLES */
+/* ========================= */
 
 useEffect(()=>{
 
@@ -69,11 +87,58 @@ handleKeyDown
 
 },[]);
 
+/* ========================= */
+/* DESCARGAR PRESENTACION PDF */
+/* ========================= */
+
+const downloadPresentationPDF = ()=>{
+
+const element =
+document.querySelector(".presentation");
+
+const options = {
+
+margin:0,
+
+filename:
+"Presentacion_EMCO.pdf",
+
+image:{
+type:"jpeg",
+quality:1
+},
+
+html2canvas:{
+scale:2,
+useCORS:true
+},
+
+jsPDF:{
+unit:"mm",
+format:"a4",
+orientation:"landscape"
+},
+
+pagebreak:{
+mode:["avoid-all","css","legacy"]
+}
+
+};
+
+html2pdf()
+.set(options)
+.from(element)
+.save();
+
+};
+
 return (
 
 <div className="app">
 
+{/* ========================= */}
 {/* SIDEBAR */}
+{/* ========================= */}
 
 <nav className="sidebar">
 
@@ -113,7 +178,9 @@ currentSlide === index
 
 </nav>
 
+{/* ========================= */}
 {/* PRESENTATION */}
+{/* ========================= */}
 
 <main className="presentation">
 
@@ -156,94 +223,32 @@ type:"spring"
 
 <div className="hero">
 
-<motion.h1
-
-initial={{
-opacity:0,
-y:80
-}}
-
-animate={{
-opacity:1,
-y:0
-}}
-
-transition={{
-duration:1
-}}
-
->
+<h1>
 
 Hackeo al Estado Mayor
 Conjunto (EMCO)
 
-</motion.h1>
+</h1>
 
-<motion.h2
-
-initial={{
-opacity:0
-}}
-
-animate={{
-opacity:1
-}}
-
-transition={{
-delay:.3,
-duration:1
-}}
-
->
+<h2>
 
 Chile — 2022
 
-</motion.h2>
+</h2>
 
-<motion.p
-
-initial={{
-opacity:0,
-y:30
-}}
-
-animate={{
-opacity:1,
-y:0
-}}
-
-transition={{
-delay:.6,
-duration:1
-}}
-
->
+<p>
 
 Análisis de ciberseguridad,
 protección de datos y delitos
-informáticos asociados al
-ciberataque EMCO.
+informáticos asociados al caso.
 
-</motion.p>
+</p>
 
-<motion.div
-
-className="heroBadge"
-
-animate={{
-scale:[1,1.05,1]
-}}
-
-transition={{
-duration:2,
-repeat:Infinity
-}}
-
->
+<div className="heroBadge">
 
 400.000 correos filtrados
 
-</motion.div>
+</div>
 
 </div>
 
@@ -263,16 +268,7 @@ Resumen Ejecutivo
 
 <div className="content">
 
-<motion.div
-
-className="card"
-
-whileHover={{
-scale:1.05,
-y:-10
-}}
-
->
+<div className="card">
 
 <h3>
 
@@ -289,18 +285,9 @@ Guacamaya.
 
 </p>
 
-</motion.div>
+</div>
 
-<motion.div
-
-className="card"
-
-whileHover={{
-scale:1.05,
-y:-10
-}}
-
->
+<div className="card">
 
 <h3>
 
@@ -311,23 +298,14 @@ y:-10
 <p>
 
 Acceso ilícito
-y filtración de
-miles de correos.
+y filtración masiva
+de correos.
 
 </p>
 
-</motion.div>
+</div>
 
-<motion.div
-
-className="card"
-
-whileHover={{
-scale:1.05,
-y:-10
-}}
-
->
+<div className="card">
 
 <h3>
 
@@ -338,13 +316,12 @@ Consecuencia
 <p>
 
 Impacto nacional
-y exposición
-de información
-sensible.
+y exposición de
+información crítica.
 
 </p>
 
-</motion.div>
+</div>
 
 </div>
 
@@ -366,70 +343,69 @@ Actores involucrados
 
 <div className="grid">
 
-{[
-{
-title:"Guacamaya",
-text:"Grupo hacktivista responsable."
-},
-
-{
-title:"EMCO",
-text:"Institución afectada."
-},
-
-{
-title:"Funcionarios",
-text:"Datos comprometidos."
-},
-
-{
-title:"Estado Chile",
-text:"Impacto institucional."
-}
-
-].map((actor,index)=>(
-
-<motion.div
-
-key={index}
-
-className="actorCard"
-
-initial={{
-opacity:0,
-y:50
-}}
-
-animate={{
-opacity:1,
-y:0
-}}
-
-transition={{
-delay:index*.2
-}}
-
-whileHover={{
-scale:1.08
-}}
-
->
+<div className="actorCard">
 
 <h3>
 
-{actor.title}
+Guacamaya
 
 </h3>
 
 <p>
 
-{actor.text}
+Grupo hacktivista responsable.
 
 </p>
 
-</motion.div>
+</div>
 
-))}
+<div className="actorCard">
+
+<h3>
+
+EMCO
+
+</h3>
+
+<p>
+
+Institución afectada.
+
+</p>
+
+</div>
+
+<div className="actorCard">
+
+<h3>
+
+Funcionarios
+
+</h3>
+
+<p>
+
+Datos comprometidos.
+
+</p>
+
+</div>
+
+<div className="actorCard">
+
+<h3>
+
+Estado Chile
+
+</h3>
+
+<p>
+
+Impacto institucional.
+
+</p>
+
+</div>
 
 </div>
 
@@ -451,57 +427,73 @@ Impacto del incidente
 
 <div className="impactGrid">
 
-{[
-"Seguridad nacional",
-"Datos personales",
-"Impacto operativo",
-"Impacto reputacional"
-].map((impact,index)=>(
-
-<motion.div
-
-key={index}
-
-className="impactCard"
-
-whileHover={{
-scale:1.07,
-rotate:1
-}}
-
-initial={{
-opacity:0,
-scale:.8
-}}
-
-animate={{
-opacity:1,
-scale:1
-}}
-
-transition={{
-delay:index*.15
-}}
-
->
+<div className="impactCard">
 
 <h3>
 
-{impact}
+Seguridad nacional
 
 </h3>
 
 <p>
 
-Consecuencias
-críticas derivadas
-del ataque.
+Riesgo asociado
+a información militar.
 
 </p>
 
-</motion.div>
+</div>
 
-))}
+<div className="impactCard">
+
+<h3>
+
+Datos personales
+
+</h3>
+
+<p>
+
+Exposición de
+información sensible.
+
+</p>
+
+</div>
+
+<div className="impactCard">
+
+<h3>
+
+Impacto operativo
+
+</h3>
+
+<p>
+
+Revisión y contención
+de sistemas.
+
+</p>
+
+</div>
+
+<div className="impactCard">
+
+<h3>
+
+Impacto reputacional
+
+</h3>
+
+<p>
+
+Cuestionamientos
+sobre seguridad estatal.
+
+</p>
+
+</div>
 
 </div>
 
@@ -523,56 +515,69 @@ Marco Normativo
 
 <div className="lawsGrid">
 
-{[
-"Ley 21.459",
-"Ley 19.628",
-"Convenio Budapest",
-"ISO 27001"
-].map((law,index)=>(
-
-<motion.div
-
-key={index}
-
-className="lawCard"
-
-whileHover={{
-scale:1.08,
-y:-10
-}}
-
-initial={{
-opacity:0,
-x:-60
-}}
-
-animate={{
-opacity:1,
-x:0
-}}
-
-transition={{
-delay:index*.15
-}}
-
->
+<div className="lawCard">
 
 <h3>
 
-{law}
+Ley 21.459
 
 </h3>
 
 <p>
 
-Marco regulatorio
-aplicable al caso.
+Delitos informáticos.
 
 </p>
 
-</motion.div>
+</div>
 
-))}
+<div className="lawCard">
+
+<h3>
+
+Ley 19.628
+
+</h3>
+
+<p>
+
+Protección de datos.
+
+</p>
+
+</div>
+
+<div className="lawCard">
+
+<h3>
+
+Budapest
+
+</h3>
+
+<p>
+
+Cooperación internacional.
+
+</p>
+
+</div>
+
+<div className="lawCard">
+
+<h3>
+
+ISO 27001
+
+</h3>
+
+<p>
+
+Seguridad información.
+
+</p>
+
+</div>
 
 </div>
 
@@ -592,21 +597,7 @@ Delitos Informáticos
 
 </h2>
 
-<motion.div
-
-className="tableBox"
-
-initial={{
-opacity:0,
-scale:.9
-}}
-
-animate={{
-opacity:1,
-scale:1
-}}
-
->
+<div className="tableBox">
 
 <table>
 
@@ -700,7 +691,7 @@ Ataque integridad sistemas
 
 </table>
 
-</motion.div>
+</div>
 
 </div>
 
@@ -720,15 +711,7 @@ Datos Personales
 
 <div className="content">
 
-<motion.div
-
-className="card"
-
-whileHover={{
-scale:1.06
-}}
-
->
+<div className="card">
 
 <h3>
 
@@ -738,9 +721,9 @@ Datos expuestos
 
 <ul>
 
-<li>Correos</li>
+<li>Correos electrónicos</li>
 
-<li>Nombres</li>
+<li>Nombres completos</li>
 
 <li>Cargos</li>
 
@@ -748,17 +731,9 @@ Datos expuestos
 
 </ul>
 
-</motion.div>
+</div>
 
-<motion.div
-
-className="card"
-
-whileHover={{
-scale:1.06
-}}
-
->
+<div className="card">
 
 <h3>
 
@@ -778,7 +753,7 @@ Derechos ARCO
 
 </ul>
 
-</motion.div>
+</div>
 
 </div>
 
@@ -800,66 +775,53 @@ Responsabilidades
 
 <div className="responsibilityGrid">
 
-{[
-{
-title:"Guacamaya",
-text:"Responsabilidad penal."
-},
-
-{
-title:"EMCO",
-text:"Responsabilidad administrativa."
-},
-
-{
-title:"Administradores TI",
-text:"Responsabilidad civil."
-}
-
-].map((item,index)=>(
-
-<motion.div
-
-key={index}
-
-className="responsibilityCard"
-
-whileHover={{
-scale:1.08,
-y:-10
-}}
-
-initial={{
-opacity:0,
-x:80
-}}
-
-animate={{
-opacity:1,
-x:0
-}}
-
-transition={{
-delay:index*.2
-}}
-
->
+<div className="responsibilityCard">
 
 <h3>
 
-{item.title}
+Guacamaya
 
 </h3>
 
 <p>
 
-{item.text}
+Responsabilidad penal.
 
 </p>
 
-</motion.div>
+</div>
 
-))}
+<div className="responsibilityCard">
+
+<h3>
+
+EMCO
+
+</h3>
+
+<p>
+
+Responsabilidad administrativa.
+
+</p>
+
+</div>
+
+<div className="responsibilityCard">
+
+<h3>
+
+Administradores TI
+
+</h3>
+
+<p>
+
+Responsabilidad civil.
+
+</p>
+
+</div>
 
 </div>
 
@@ -879,21 +841,7 @@ Conclusiones
 
 </h2>
 
-<motion.div
-
-className="conclusionBox"
-
-initial={{
-opacity:0,
-y:40
-}}
-
-animate={{
-opacity:1,
-y:0
-}}
-
->
+<div className="conclusionBox">
 
 <ul>
 
@@ -905,35 +853,31 @@ La prevención es fundamental.
 
 <li>
 
-La ciberseguridad
-es esencial.
+La ciberseguridad es esencial.
 
 </li>
 
 <li>
 
-La capacitación
-reduce riesgos.
+La capacitación reduce riesgos.
 
 </li>
 
 <li>
 
-Los datos personales
-deben protegerse.
+Los datos deben protegerse.
 
 </li>
 
 <li>
 
-Las amenazas digitales
-siguen creciendo.
+Las amenazas digitales siguen creciendo.
 
 </li>
 
 </ul>
 
-</motion.div>
+</div>
 
 </div>
 
@@ -945,22 +889,11 @@ siguen creciendo.
 
 <div className="finalSlide">
 
-<motion.h1
-
-animate={{
-opacity:[1,.7,1]
-}}
-
-transition={{
-duration:2,
-repeat:Infinity
-}}
-
->
+<h1>
 
 Gracias
 
-</motion.h1>
+</h1>
 
 <p>
 
@@ -968,7 +901,7 @@ Caso EMCO — Chile 2022
 
 </p>
 
-<motion.a
+<a
 
 href="https://github.com/julioanabalonsaavedra-droid"
 
@@ -976,19 +909,31 @@ target="_blank"
 
 rel="noopener noreferrer"
 
-whileHover={{
-scale:1.1
-}}
-
-whileTap={{
-scale:.95
-}}
-
 >
 
 GitHub
 
-</motion.a>
+</a>
+
+<br/>
+
+<br/>
+
+{/* ========================= */}
+{/* BOTON PDF FINAL */}
+{/* ========================= */}
+
+<button
+
+className="downloadFullPdf"
+
+onClick={downloadPresentationPDF}
+
+>
+
+Descargar presentación completa PDF
+
+</button>
 
 </div>
 
@@ -998,7 +943,9 @@ GitHub
 
 </AnimatePresence>
 
+{/* ========================= */}
 {/* CONTROLES */}
+{/* ========================= */}
 
 <div className="controls">
 
@@ -1061,3 +1008,4 @@ prev < slides.length - 1
 }
 
 export default App;
+
