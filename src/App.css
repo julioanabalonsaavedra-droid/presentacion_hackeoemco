@@ -1,11 +1,22 @@
+/* ========================= */
+/* RESET */
+/* ========================= */
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 }
 
-html{
+html,
+body,
+#root{
+
+width:100%;
+height:100%;
+
 scroll-behavior:smooth;
+overflow:hidden;
 }
 
 body{
@@ -13,37 +24,24 @@ body{
 font-family:'Segoe UI',sans-serif;
 
 background:
+radial-gradient(circle at top left,#7f1d1d 0%,transparent 30%),
+radial-gradient(circle at bottom right,#450a0a 0%,transparent 35%),
 linear-gradient(
 135deg,
 #020617,
 #0f172a,
 #111827,
-#450a0a
+#020617
 );
 
 color:white;
 
-overflow:hidden;
+position:relative;
 }
 
-/* OCULTAR SCROLLBAR */
-
-body,
-.presentation{
-
-scrollbar-width:none;
--ms-overflow-style:none;
-
-}
-
-body::-webkit-scrollbar,
-.presentation::-webkit-scrollbar{
-
-display:none;
-
-}
-
-/* CYBER GRID */
+/* ========================= */
+/* FONDO CYBER */
+/* ========================= */
 
 body::before{
 
@@ -74,6 +72,31 @@ pointer-events:none;
 z-index:-2;
 }
 
+body::after{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+radial-gradient(
+circle,
+rgba(239,68,68,.12),
+transparent 70%
+);
+
+filter:blur(100px);
+
+animation:
+pulseBg 6s infinite alternate;
+
+pointer-events:none;
+
+z-index:-1;
+}
+
 @keyframes gridMove{
 
 0%{
@@ -86,16 +109,37 @@ transform:translateY(45px);
 
 }
 
+@keyframes pulseBg{
+
+0%{
+opacity:.5;
+transform:scale(1);
+}
+
+100%{
+opacity:1;
+transform:scale(1.2);
+}
+
+}
+
+/* ========================= */
 /* APP */
+/* ========================= */
 
 .app{
+
 display:flex;
+
 width:100%;
 height:100vh;
+
 overflow:hidden;
 }
 
+/* ========================= */
 /* SIDEBAR */
+/* ========================= */
 
 .sidebar{
 
@@ -110,45 +154,42 @@ height:100vh;
 padding:35px 20px;
 
 background:
-rgba(2,6,23,.92);
+rgba(2,6,23,.85);
 
 backdrop-filter:blur(18px);
 
 border-right:
-1px solid rgba(255,255,255,.06);
+1px solid rgba(255,255,255,.08);
 
-z-index:1000;
-
-display:flex;
-flex-direction:column;
-align-items:center;
+z-index:999;
 }
 
 .sidebar h1{
 
-font-size:40px;
+font-size:42px;
 
 margin-bottom:40px;
 
-color:#ef4444;
+text-align:center;
 
 letter-spacing:5px;
 
+color:#ef4444;
+
 text-shadow:
-0 0 15px rgba(239,68,68,.7);
+0 0 15px rgba(239,68,68,.8);
 
 animation:
-flicker 5s infinite;
+flicker 4s infinite;
 }
 
 .sidebar ul{
 
 list-style:none;
-
-width:100%;
 }
 
 .sidebar li{
+
 margin-bottom:15px;
 }
 
@@ -156,24 +197,23 @@ margin-bottom:15px;
 
 width:100%;
 
-padding:14px 18px;
+padding:15px 18px;
 
 border:none;
 
-border-radius:15px;
+border-radius:16px;
+
+cursor:pointer;
+
+font-size:15px;
+font-weight:bold;
 
 background:
 rgba(15,23,42,.7);
 
 color:#cbd5e1;
 
-font-weight:bold;
-
-cursor:pointer;
-
 transition:.4s;
-
-font-size:15px;
 
 position:relative;
 
@@ -196,7 +236,7 @@ background:
 linear-gradient(
 90deg,
 transparent,
-rgba(255,255,255,.2),
+rgba(255,255,255,.18),
 transparent
 );
 
@@ -204,6 +244,7 @@ transition:.6s;
 }
 
 .sidebar button:hover::before{
+
 left:100%;
 }
 
@@ -217,7 +258,9 @@ linear-gradient(
 #ef4444
 );
 
-transform:translateX(8px);
+transform:
+translateX(8px)
+scale(1.02);
 
 box-shadow:
 0 0 20px rgba(239,68,68,.5);
@@ -225,33 +268,34 @@ box-shadow:
 color:white;
 }
 
+/* ========================= */
 /* PRESENTATION */
+/* ========================= */
 
 .presentation{
 
 margin-left:240px;
 
 width:calc(100% - 240px);
-
 height:100vh;
 
 display:flex;
 justify-content:center;
 align-items:center;
 
-overflow:hidden;
-
 position:relative;
+
+overflow:hidden;
 }
 
+/* ========================= */
 /* SLIDE */
+/* ========================= */
 
 .slide{
 
-width:90%;
-max-width:1300px;
-
-min-height:80vh;
+width:92%;
+height:88vh;
 
 padding:60px;
 
@@ -261,9 +305,12 @@ background:
 rgba(15,23,42,.55);
 
 border:
-1px solid rgba(255,255,255,.06);
+1px solid rgba(255,255,255,.08);
 
 backdrop-filter:blur(20px);
+
+box-shadow:
+0 0 40px rgba(0,0,0,.5);
 
 position:relative;
 
@@ -272,12 +319,9 @@ overflow:hidden;
 display:flex;
 flex-direction:column;
 justify-content:center;
-
-box-shadow:
-0 0 40px rgba(0,0,0,.5);
 }
 
-/* GLOW */
+/* GLOWS */
 
 .slide::before{
 
@@ -299,9 +343,33 @@ top:-150px;
 right:-150px;
 
 animation:
-rotateGlow 20s linear infinite;
+rotateGlow 18s linear infinite;
 
 pointer-events:none;
+}
+
+.slide::after{
+
+content:"";
+
+position:absolute;
+
+top:0;
+left:-100%;
+
+width:100%;
+height:2px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(239,68,68,.9),
+transparent
+);
+
+animation:
+scanLine 4s linear infinite;
 }
 
 @keyframes rotateGlow{
@@ -316,7 +384,21 @@ transform:rotate(360deg);
 
 }
 
+@keyframes scanLine{
+
+0%{
+left:-100%;
+}
+
+100%{
+left:100%;
+}
+
+}
+
+/* ========================= */
 /* HERO */
+/* ========================= */
 
 .hero{
 
@@ -330,7 +412,7 @@ text-align:center;
 
 .hero h1{
 
-font-size:80px;
+font-size:90px;
 
 line-height:1.1;
 
@@ -339,15 +421,15 @@ max-width:950px;
 margin-bottom:25px;
 
 text-shadow:
-0 0 30px rgba(220,38,38,.8);
+0 0 25px rgba(239,68,68,.8);
 
 animation:
-heroReveal 1.5s ease;
+heroReveal 1.4s ease;
 }
 
 .hero h2{
 
-font-size:35px;
+font-size:38px;
 
 margin-bottom:25px;
 
@@ -356,16 +438,14 @@ color:#ef4444;
 
 .hero p{
 
-font-size:22px;
+font-size:23px;
 
-max-width:800px;
+max-width:850px;
 
 line-height:1.7;
 
 color:#cbd5e1;
 }
-
-/* BADGE */
 
 .heroBadge{
 
@@ -373,9 +453,9 @@ margin-top:40px;
 
 padding:18px 35px;
 
-border-radius:40px;
+border-radius:50px;
 
-font-size:22px;
+font-size:24px;
 font-weight:bold;
 
 background:
@@ -386,7 +466,7 @@ linear-gradient(
 );
 
 box-shadow:
-0 0 30px rgba(239,68,68,.6);
+0 0 35px rgba(239,68,68,.7);
 
 animation:
 pulseGlow 2s infinite;
@@ -395,44 +475,51 @@ pulseGlow 2s infinite;
 @keyframes pulseGlow{
 
 0%{
+transform:scale(1);
 box-shadow:
-0 0 10px rgba(239,68,68,.3);
+0 0 15px rgba(239,68,68,.3);
 }
 
 50%{
+transform:scale(1.05);
 box-shadow:
-0 0 40px rgba(239,68,68,.9);
+0 0 45px rgba(239,68,68,.9);
 }
 
 100%{
+transform:scale(1);
 box-shadow:
-0 0 10px rgba(239,68,68,.3);
+0 0 15px rgba(239,68,68,.3);
 }
 
 }
 
+/* ========================= */
 /* TITLES */
+/* ========================= */
 
 .slide h2{
 
-font-size:55px;
+font-size:58px;
 
-margin-bottom:40px;
+margin-bottom:45px;
 
 text-shadow:
-0 0 15px rgba(220,38,38,.5);
+0 0 15px rgba(239,68,68,.5);
 }
 
 .slide h3{
 
-font-size:26px;
+font-size:28px;
 
 margin-bottom:15px;
 
 color:#ef4444;
 }
 
+/* ========================= */
 /* GRIDS */
+/* ========================= */
 
 .content,
 .grid,
@@ -448,7 +535,9 @@ repeat(auto-fit,minmax(260px,1fr));
 gap:25px;
 }
 
+/* ========================= */
 /* CARDS */
+/* ========================= */
 
 .card,
 .actorCard,
@@ -458,19 +547,22 @@ gap:25px;
 
 padding:28px;
 
-border-radius:25px;
+border-radius:24px;
 
 background:
 rgba(30,41,59,.65);
 
 border:
-1px solid rgba(255,255,255,.05);
-
-transition:.4s;
+1px solid rgba(255,255,255,.06);
 
 position:relative;
 
 overflow:hidden;
+
+transition:.4s;
+
+animation:
+floatCard 5s ease-in-out infinite;
 }
 
 .card::before,
@@ -493,7 +585,7 @@ background:
 linear-gradient(
 120deg,
 transparent,
-rgba(255,255,255,.04),
+rgba(255,255,255,.06),
 transparent
 );
 
@@ -519,14 +611,32 @@ left:100%;
 .responsibilityCard:hover{
 
 transform:
-translateY(-10px)
-scale(1.03);
+translateY(-12px)
+scale(1.04);
 
 box-shadow:
-0 0 30px rgba(239,68,68,.35);
+0 0 35px rgba(239,68,68,.45);
 }
 
+@keyframes floatCard{
+
+0%{
+transform:translateY(0px);
+}
+
+50%{
+transform:translateY(-10px);
+}
+
+100%{
+transform:translateY(0px);
+}
+
+}
+
+/* ========================= */
 /* TABLE */
+/* ========================= */
 
 .tableBox{
 
@@ -535,13 +645,17 @@ overflow:hidden;
 border-radius:25px;
 
 background:
-rgba(30,41,59,.6);
+rgba(30,41,59,.7);
 
 padding:20px;
+
+backdrop-filter:blur(15px);
 }
 
 table{
+
 width:100%;
+
 border-collapse:collapse;
 }
 
@@ -559,7 +673,7 @@ td{
 padding:18px;
 
 background:
-rgba(51,65,85,.7);
+rgba(51,65,85,.75);
 
 text-align:center;
 
@@ -569,10 +683,12 @@ transition:.3s;
 tr:hover td{
 
 background:
-rgba(239,68,68,.15);
+rgba(239,68,68,.18);
 }
 
+/* ========================= */
 /* LISTS */
+/* ========================= */
 
 ul{
 list-style:none;
@@ -580,17 +696,17 @@ list-style:none;
 
 ul li{
 
-margin-bottom:15px;
+margin-bottom:14px;
 
-padding:14px;
+padding:15px;
+
+background:
+rgba(30,41,59,.75);
 
 border-left:
 4px solid #ef4444;
 
-background:
-rgba(30,41,59,.8);
-
-border-radius:10px;
+border-radius:12px;
 
 transition:.3s;
 }
@@ -603,7 +719,9 @@ background:
 rgba(239,68,68,.15);
 }
 
+/* ========================= */
 /* FINAL */
+/* ========================= */
 
 .finalSlide{
 
@@ -617,14 +735,14 @@ text-align:center;
 
 .finalSlide h1{
 
-font-size:90px;
+font-size:100px;
 
 margin-bottom:20px;
 
 color:#ef4444;
 
 text-shadow:
-0 0 25px rgba(239,68,68,.8);
+0 0 30px rgba(239,68,68,.9);
 }
 
 .finalSlide p{
@@ -638,7 +756,7 @@ margin-bottom:30px;
 
 padding:18px 35px;
 
-border-radius:40px;
+border-radius:45px;
 
 background:
 linear-gradient(
@@ -647,29 +765,31 @@ linear-gradient(
 #ef4444
 );
 
-text-decoration:none;
-
 color:white;
 
 font-weight:bold;
 
+text-decoration:none;
+
 transition:.4s;
 
 box-shadow:
-0 0 20px rgba(239,68,68,.5);
+0 0 25px rgba(239,68,68,.5);
 }
 
 .finalSlide a:hover{
 
 transform:
 translateY(-8px)
-scale(1.05);
+scale(1.06);
 
 box-shadow:
-0 0 35px rgba(239,68,68,.8);
+0 0 40px rgba(239,68,68,.9);
 }
 
-/* CONTROLS */
+/* ========================= */
+/* CONTROLES */
+/* ========================= */
 
 .controls{
 
@@ -687,14 +807,14 @@ z-index:9999;
 
 .controls button{
 
-width:60px;
-height:60px;
+width:65px;
+height:65px;
 
 border:none;
 
 border-radius:50%;
 
-font-size:28px;
+font-size:30px;
 
 cursor:pointer;
 
@@ -710,17 +830,17 @@ color:white;
 transition:.3s;
 
 box-shadow:
-0 0 20px rgba(239,68,68,.5);
+0 0 25px rgba(239,68,68,.6);
 }
 
 .controls button:hover{
 
 transform:
-scale(1.1)
+scale(1.12)
 translateY(-4px);
 
 box-shadow:
-0 0 35px rgba(239,68,68,.9);
+0 0 40px rgba(239,68,68,.9);
 }
 
 .controls span{
@@ -729,7 +849,9 @@ font-size:20px;
 font-weight:bold;
 }
 
+/* ========================= */
 /* ANIMATIONS */
+/* ========================= */
 
 @keyframes heroReveal{
 
@@ -777,7 +899,9 @@ opacity:1;
 
 }
 
+/* ========================= */
 /* RESPONSIVE */
+/* ========================= */
 
 @media(max-width:1000px){
 
@@ -794,8 +918,7 @@ left:0;
 
 padding:15px;
 
-flex-direction:row;
-
+display:flex;
 justify-content:center;
 
 overflow-x:auto;
@@ -826,18 +949,19 @@ width:100%;
 .slide{
 
 width:95%;
+height:auto;
 
 padding:35px;
 }
 
 .hero h1{
 
-font-size:42px;
+font-size:45px;
 }
 
 .slide h2{
 
-font-size:35px;
+font-size:36px;
 }
 
 .finalSlide h1{
